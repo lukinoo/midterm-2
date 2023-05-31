@@ -1,0 +1,1 @@
+export { createLecturer } from "./createLecturer";

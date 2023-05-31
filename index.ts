@@ -1,8 +1,11 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import mongoose, { ConnectOptions } from "mongoose";
-import { Course } from "./models/course";
-import { Lecturer } from "./models/lecturer";
+import { getAllCourses } from "./controllers/getAllCourses";
+import { createCourse } from "./controllers/createCourse";
+import { getAllLecturers } from "./controllers/getAllLecturers";
+import { createLecturer } from "./controllers/createLecturer";
+
 dotenv.config();
 
 const app = express();
@@ -18,50 +21,13 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/course", async (req: Request, res: Response) => {
-  try {
-    const subjects = await Course.find().populate("Collections");
+// course handler methods
+app.get("/course", getAllCourses);
+app.post("/course", createCourse);
 
-    res.status(200).json(subjects);
-  } catch (error) {
-    res.status(500).json({ error: "something went wrong" });
-  }
-});
-
-app.post("/course", async (req, res) => {
-  const subject = new Course({ name: "webdev" });
-
-  subject
-    .save()
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.get("/lecturer", async (req, res) => {
-  try {
-    const lecturers = await Lecturer.find().populate("Lecturer");
-
-    console.log(lecturers);
-    res.status(200).json(lecturers);
-  } catch (error) {
-    res.status(500).json({ error: "something went wrong" });
-  }
-});
-
-app.post("/lecturer", async (req, res) => {
-  try {
-    const lecturer = new Lecturer({ name: "luka", subjects: "webdev" });
-
-    await lecturer.save();
-    res.status(200).json(lecturer);
-  } catch (error) {
-    res.status(500).json({ error: "something went wrong" });
-  }
-});
+// lecturer handler methods
+app.get("/lecturer", getAllLecturers);
+app.post("/lecturer", createLecturer);
 
 mongoose
   .connect(
