@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose, { ConnectOptions } from "mongoose";
-import { getAllCourses } from "./controllers/getAllCourses";
+import { getCourse } from "./controllers/getCourse";
 import { createCourse } from "./controllers/createCourse";
-import { getAllLecturers } from "./controllers/getAllLecturers";
+import { getLecturerSubjects } from "./controllers/getLecturerSubjects";
 import { createLecturer } from "./controllers/createLecturer";
 
 dotenv.config();
@@ -13,20 +13,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
 app.use(express.urlencoded({ extended: true }));
 
 // course handler methods
-app.get("/course", getAllCourses);
+app.get("/course/:lecturerId", getCourse);
 app.post("/course", createCourse);
 
 // lecturer handler methods
-app.get("/lecturer", getAllLecturers);
+app.get("/lecturers/:lecturerId/subjects", getLecturerSubjects);
 app.post("/lecturer", createLecturer);
 
 mongoose

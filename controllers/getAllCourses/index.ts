@@ -1,1 +1,0 @@
-export { getAllCourses } from "./getAllCourses";

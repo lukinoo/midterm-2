@@ -1,11 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const LecturerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
+const LecturerSchema = new Schema({
+  name: { type: String, required: true },
+  subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
 });
 
 export const Lecturer = mongoose.model("Lecturer", LecturerSchema);
