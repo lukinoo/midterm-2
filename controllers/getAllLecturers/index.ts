@@ -1,1 +1,0 @@
-export { getAllLecturers } from "./getAllLecturers";

@@ -1,0 +1,1 @@
+export { getLecturerSubjects } from "./getLecturerSubjects";
